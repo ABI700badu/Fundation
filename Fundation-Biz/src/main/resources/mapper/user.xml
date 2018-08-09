@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fundation.biz.dao.UserDao">
+    <resultMap id="userData" type="com.fundation.biz.dao.UserData">
+        <result property="user_id" column="USER_ID"></result>
+        <result property="user_name" column="USER_NAME"></result>
+        <result property="password" column="PASSWORD"></result>
+        <result property="sex" column="SEX"></result>
+        <result property="age" column="AGE"></result>
+        <result property="phone_number" column="PHONE_NUMBER"></result>
+        <result property="create_date" column="CREATION_DATE"></result>
+        <result property="last_update_date" column="LAST_UPDATE_DATE"></result>
+        <result property="comments" column="COMMENTS"></result>
+    </resultMap>
+    <select id="selectUserInfo" resultMap="userData">
+        SELECT * FROM CUX_USERS
+        <trim prefix="WHERE" suffixOverrides="AND">
+         <if test="userId!=null">USER_ID=#{userId}</if>
+            AND
+        <if test="userId!=null">USER_ID=#{userId}</if>
+        </trim>
+    </select>
+    <select id="selectPWD" resultMap="userData">
+        SELECT PASSWORD FROM CUX_USERS WHERE USER_ID=#{userId}
+    </select>
+    <update id="update">
+        UPDATE CUX_USERS SET
+        <if test="userData.user_id!=null">            USER_ID=#{userData.user_id},</if>
+        <if test="userData.comments!=null">            COMMENTS=#{userData.comments},</if>
+        <if test="userData.user_name!=null">        USER_NAME=#{userData.user_name}, </if>
+        <if test="userData.password!=null">          PASSWORD=#{userData.password},</if>
+        <if test="userData.sex!=null">                     SEX=#{userData.sex},  </if>
+        <if test="userData.age!=null">                     AGE=#{userData.age},  </if>
+        <if test="userData.create_date!=null">            CREATION_DATE=#{userData.create_date},  </if>
+        <if test="userData.last_update_date!=null">      LAST_UPDATE_DATE=#{userData.last_update_date},  </if>
+        <if test="userData.phone_number!=null">   PHONE_NUMBER=#{userData.phone_number}</if>
+    </update>
+
+</mapper>
